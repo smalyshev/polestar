@@ -11,6 +11,7 @@
             </a>
             <a class="command" ng-click="chron.undo()" ng-class="{disabled: !canUndo}"><i class="fa fa-undo"></i> Undo</a>
             <a class="command" ng-click="chron.redo()" ng-class="{disabled: !canRedo}"><i class="fa fa-repeat"></i> Redo</a>
+            <a class="command" ng-click="showExportPanel = !showExportPanel" ng-class="{disabled: !canUndo}"><i class="fa fa-repeat"></i> Export</a>
           </div>
         </div>
         <div class="absolute-top-right">
@@ -35,12 +36,12 @@
         <div id="footer">
           <ul class="menu">
             <span ng-show="consts.debug">
-              <li>
+              <!-- li>
                 <a class="debug" ng-click="showDevPanel = !showDevPanel">Debug</a>
               </li>
               <li>
                 <a ng-href="{{ {spec:Spec.chart.vlSpec} | reportUrl }}" target="_blank" class="debug">Report an issue</a>
-              </li>
+              </li -->
             </span>
           </ul>
         </div>
@@ -81,6 +82,13 @@
       <vg-spec-editor></vg-spec-editor>
     </div>
   </div>
+
+  <div class="hflex full-width dev-panel" ng-if="showExportPanel">
+   <div class="pane vg-pane">
+      <vg-spec-editor></vg-spec-editor>
+    </div>
+  </div>
+
 
   <bookmark-list highlighted="Fields.highlighted"></bookmark-list>
   <dataset-modal></dataset-modal>
