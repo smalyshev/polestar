@@ -38,8 +38,8 @@ angular.module('polestar')
           Dataset.dataset = {
               values: consts.embeddedData,
               name: 'embedded'
-          }
-      };
+          };
+      }
     }
 
     // initialize undo after we have a dataset

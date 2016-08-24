@@ -73,8 +73,26 @@ angular.module('polestar', [
   .config(function(localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('polestar');
   })
-  .config(function (AnalyticsProvider, consts) {
-    if (consts.embeddedData) return;
-    AnalyticsProvider
-      .setAccount({ tracker: 'UA-44428446-4', name: 'polestar', trackEvent: true });
+  .decorator('Dataset', function ($q, vg, $delegate) {
+
+    var previousUpdate = $delegate.update;
+    $delegate.getUpdate = function(dataset, updateFromData) {
+        if(dataset.url) {
+            return $q(function(resolve, reject) {
+                // jshint unused:false
+                vg.util.load({ url: dataset.url }, function(error, data) {
+                    if(error) {
+                        console.log(error);
+                    } else {
+                        updateFromData(dataset, data);
+                    }
+                });
+                resolve();
+            });
+	    }
+
+	    return previousUpdate(dataset);
+	};
+
+	return $delegate;
   });
