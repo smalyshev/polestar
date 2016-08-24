@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('polestar')
-  .controller('MainCtrl', function($scope, $document, Spec, Dataset, Config, consts, Chronicle, Logger, Bookmarks, Modals) {
+  .controller('MainCtrlEmbed', function($scope, $document, Spec, Dataset, Config, consts, Chronicle, Logger, Bookmarks, Modals) {
     $scope.Spec = Spec;
     $scope.Dataset = Dataset;
     $scope.Config = Config;
@@ -29,11 +29,17 @@ angular.module('polestar')
     }
 
     if ($scope.embedded) {
-      // use provided data and we will hide the dataset selector
-      Dataset.dataset = {
-        values: consts.embeddedData,
-        name: 'embedded'
-      };
+        // use provided data and we will hide the dataset selector
+      if(consts.embeddedData._directEmbed) {
+          // We already have wrapped data
+          Dataset.dataset = consts.embeddedData;
+      } else {
+          // Wrap the raw data
+          Dataset.dataset = {
+              values: consts.embeddedData,
+              name: 'embedded'
+          };
+      }
     }
 
     // initialize undo after we have a dataset
